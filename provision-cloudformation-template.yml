@@ -1,0 +1,15 @@
+- hosts: localhost
+  tasks:
+    - name: first Task Provision ec2
+      cloudformation:
+        stack_name: 'provisiong-ec2'
+        state: present
+        region: us-east-1
+        disable_rollback: true
+        template_url: https://s3.amazonaws.com/genericgenericgeneric/ansy2-cloudformation.template
+        template_parameters:
+          KeyName: usa
+          SecurityGroupIDs: sg-00c8deb1afecc13b7
+          InstanceType: t2.micro
+          Image: ami-0b33d91d
+

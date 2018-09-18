@@ -1,0 +1,43 @@
+Parameters:
+  SecurityGroupIDs:
+    Type: List<AWS::EC2::SecurityGroup::Id>
+    Description: List of Security Groups to add to EC2 instance
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: >-
+      Name of an existing EC2 KeyPair to enable SSH access to the instance
+  InstanceType:
+    Description: EC2 instance type
+    Type: String
+    Default: t2.micro
+  Image:
+    Type: String
+    Description: List of Images to
+Resources:
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref Image
+      InstanceType: !Ref InstanceType
+      KeyName: !Ref KeyName
+      SecurityGroupIds: !Ref SecurityGroupIDs
+      UserData:
+        Fn::Base64:                               
+          !Sub |
+              #!/bin/bash -ex
+              yum install -y httpd;
+              echo "<h1>This isnt from CloudFormation. This is from Ansible!</h1>" > /var/www/html/index.html;
+              cd /var/www/html;
+              chmod 755 index.html;
+              service httpd start;
+              chkconfig httpd on;
+      Tags:
+        -                                        
+          Key: Name
+          Value: Ansible-Pro
+  S3:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    Properties:
+      AccessControl: PublicRead
+  

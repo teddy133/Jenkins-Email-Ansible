@@ -1,0 +1,19 @@
+Parameters:
+  KeyPair:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Connects to this
+
+Resources:
+  ec2:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-04681a1dbd79675a5
+      InstanceType: t2.micro
+      KeyName: !Ref KeyPair
+      Tags:
+        - Key: Name
+          Value: tangible-Provisioned
+      
+Outputs:
+  PublicDNS:
+    Value: !GetAtt ec2.PublicIp

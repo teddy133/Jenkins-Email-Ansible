@@ -2,7 +2,7 @@
   tasks:
     - name: first Task Provision ec2
       cloudformation:
-        stack_name: 'provisiong-ec2'
+        stack_name: jacked
         state: present
         region: us-east-1
         disable_rollback: true
@@ -12,4 +12,4 @@
           SecurityGroupIDs: sg-00c8deb1afecc13b7
           InstanceType: t2.micro
           Image: ami-0b33d91d
-
+          ServerName: jacked

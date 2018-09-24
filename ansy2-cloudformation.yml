@@ -31,13 +31,7 @@ Resources:
               chmod 755 index.html;
               service httpd start;
               chkconfig httpd on;
-      Tags:
-        -                                        
+      Tags:                                      # Tags are an example of a sequence of mappings in YAML,
+        -                                        # each key/value pair is separated by a hyphen
           Key: Name
-          Value: Ansible-Pro
-  S3:
-    Type: AWS::S3::Bucket
-    DeletionPolicy: Retain
-    Properties:
-      AccessControl: PublicRead
-  
+          Value: !Ref ServerName
